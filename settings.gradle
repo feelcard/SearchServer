@@ -1,0 +1,3 @@
+rootProject.name = 'SearchServer'
+include 'outbound-api'
+

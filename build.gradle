@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.springframework.boot' version '2.6.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group 'org.develop.search'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+
+
+bootJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    mainClassName = "org.search.SearchApplication"
+}
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.8.1'
+    springBootVersion = '2.6.2'
+    h2Version = '1.4.200'
+    lombokVersion = '1.18.22'
+    springBootStarterAopVersion = '2.5.6'
+    festerxmlJacksonDatatype = '2.13.1'
+}
+
+dependencies {
+    implementation project(path: ':outbound-api')
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation "com.h2database:h2:${h2Version}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-aop:${springBootStarterAopVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${festerxmlJacksonDatatype}"
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
