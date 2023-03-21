@@ -56,11 +56,10 @@
                 "url": "http://dev-whoan.xyz/102",
                 "blogname": "짧은머리 개발자",
                 "thumbnail": "https://search4.kakaocdn.net/argon/130x130_85_c/L9EJ0FzI9iO",
-                "datetime": "2023-03-10T12:59:55Z[UTC]"
-            },
-            .
-            .
-            .
+                "datetime": "2023-03-10T12:59:55+09:00"
+            }
+         ]
+     }
     ```
 
     
