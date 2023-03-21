@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.search.apis.domain.CachedResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public class CachingAspect {
     public Object cacheApiResponse(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = null;
 
-        // HttpServletRequest 객체 찾기
+        // find the HttpServletRequest object
         for (Object arg : joinPoint.getArgs()) {
             if (arg instanceof HttpServletRequest) {
                 request = (HttpServletRequest) arg;
@@ -33,15 +34,18 @@ public class CachingAspect {
         }
 
         String cacheKey = CacheManager.createCacheKey(request);
-        Object cachedResponse = CacheManager.getFromCache(cacheKey);
+        ResponseEntity<?> cachedResponse = CacheManager.getCachedResponse(cacheKey);
 
         if (cachedResponse != null) {
             return cachedResponse;
         }
 
         Object response = joinPoint.proceed();
-        CacheManager.saveToCache(cacheKey,response,dtoCache); // 캐시를 1분 동안 유지 (단위: 초)
+        if (response instanceof ResponseEntity) {
+            CacheManager.saveToCache(cacheKey, (ResponseEntity<?>) response, dtoCache);
+        }
         return response;
     }
+
 }
 

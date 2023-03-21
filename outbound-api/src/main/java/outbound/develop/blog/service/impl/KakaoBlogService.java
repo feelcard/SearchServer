@@ -1,6 +1,7 @@
 package outbound.develop.blog.service.impl;
 
 import outbound.develop.blog.domain.BlogDTO;
+import outbound.develop.blog.domain.BlogDocument;
 import outbound.develop.blog.service.BlogService;
 import outbound.develop.blog.domain.KakaoSearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.time.ZonedDateTime;
+import java.util.stream.Collectors;
 
 
 /**
@@ -51,7 +55,11 @@ public class KakaoBlogService implements BlogService {
         }
 
         KakaoSearchResult kakaoSearchResult = responseEntity.getBody();
-        BlogDTO dto = new BlogDTO("kakao",kakaoSearchResult.getMeta(),kakaoSearchResult.getDocuments());
+        BlogDTO dto = new BlogDTO("kakao",kakaoSearchResult.getMeta(),kakaoSearchResult.getDocuments().stream()
+                .map(document -> {
+                    return new BlogDocument(document.getTitle(), document.getContents(), document.getUrl(), document.getBlogname(), document.getThumbnail(), document.getDatetime());
+                })
+                .collect(Collectors.toList()));
 
         return dto;
     }

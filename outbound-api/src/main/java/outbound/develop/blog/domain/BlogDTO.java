@@ -15,7 +15,7 @@ public class BlogDTO {
         return Instant.now().isAfter(expiryTime);
     }
 
-    public BlogDTO(String origin, Meta meta, List<?> documents) {
+    public BlogDTO(String origin, Meta meta, List<BlogDocument> documents) {
         this.origin = origin;
         this.meta = meta;
         this.documents =documents;
@@ -26,7 +26,7 @@ public class BlogDTO {
     private final String state = "SUCCESS";
     private String origin;
     private Meta meta;
-    private List<?> documents;
+    private List<BlogDocument> documents;
 
     public String getState() {
         return state;
@@ -40,7 +40,7 @@ public class BlogDTO {
         return meta;
     }
 
-    public List<?> getDocuments() {
+    public List<BlogDocument> getDocuments() {
         return documents;
     }
 

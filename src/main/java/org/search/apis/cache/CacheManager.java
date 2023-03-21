@@ -1,6 +1,7 @@
 package org.search.apis.cache;
 
 import org.search.apis.domain.CachedResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
@@ -17,17 +18,20 @@ public class CacheManager {
         CachedResponse cachedResponse = cache.get(cacheKey);
 
         if (cachedResponse != null && !cachedResponse.isExpired()) {
-            return (ResponseEntity<?>) cachedResponse.getResponse();
+            return ResponseEntity.status(HttpStatus.OK).body(cachedResponse.getResponse());
         } else {
             return null;
         }
     }
 
-    public static void saveToCache(String key, Object value, long expiredTime) {
+
+    public static void saveToCache(String key, ResponseEntity<?> responseEntity, long expiredTime) {
+        Object value = responseEntity.getBody();
         Instant expiryTime = Instant.now().plusMillis(expiredTime*1000);
         CachedResponse cachedResponse = new CachedResponse(value, expiryTime);
         cache.put(key, cachedResponse);
     }
+
 
     public static String createCacheKey(HttpServletRequest request) {
         String URI =  request.getRequestURI();
@@ -36,6 +40,5 @@ public class CacheManager {
         String size = request.getParameter("size") ==null?"1":request.getParameter("size").toString();
         String sort = request.getParameter("sort") ==null?"accuracy":request.getParameter("sort").toString();
         return URI+"_"+query+"_" + page+"_"+size+"_"+sort;
-
     }
 }

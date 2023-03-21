@@ -2,6 +2,7 @@ package org.search.apis.controller;
 
 import org.search.apis.exception.CustomApiException;
 import org.search.apis.util.ApiCallUtils;
+import org.springframework.http.HttpStatus;
 import outbound.develop.blog.domain.BlogDTO;
 import outbound.develop.blog.service.BlogService;
 import org.search.apis.service.KeywordService;
@@ -66,7 +67,7 @@ public class BlogController {
                     () -> naverBlogService.search(query, sort, (page - 1) * size + 1, size)
             );
 
-            return ResponseEntity.ok().body(blogDTO.toBlogResponse());
+            return ResponseEntity.status(HttpStatus.OK).body(blogDTO.toBlogResponse());
         }
 
     }
