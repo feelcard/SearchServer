@@ -1,6 +1,6 @@
 ## 외부 API 연동을 이용한 검색 API 서버 구현
 
-
+### 실행 jar 다운로드 : https://github.com/feelcard/SearchServer/raw/master/build/libs/SearchServer-1.0-SNAPSHOT.jar
 
 1. 검색 API
 

@@ -31,14 +31,15 @@ spring:
     common-api-url-pattern: /api/search/*
     caching-filter-order: 2
 
-#kakao:
-#  api:
-#    key: kakao-api-key
-#
-#naver:
-#  api:
-#    client-id: X-naver-client-id
-#    client-secret: X-naver-client-secret
+
+kakao:
+  api:
+    key: kakao-api-key
+
+naver:
+  api:
+    client-id: X-naver-client-id
+    client-secret: X-naver-client-secret
 
 time:
   api-call-timeout: 20000
