@@ -34,13 +34,13 @@ spring:
 
 kakao:
   api:
-    key: kakao-api-key
+    key: kakao-api-key # 카카오 앱키
 
 naver:
   api:
-    client-id: X-naver-client-id
-    client-secret: X-naver-client-secret
+    client-id: X-naver-client-id # 네이버 클라이언트 ID
+    client-secret: X-naver-client-secret # 네이버 클라이언트 secret
 
 time:
   api-call-timeout: 20000
-  dto-cache: 60
+  dto-cache: 5 # 캐시 될 시간 (실행 jar 기준 5초)
